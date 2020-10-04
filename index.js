@@ -2,6 +2,7 @@ const { create, Client } = require('@open-wa/wa-automate')
 const { color } = require('./utils')
 const options = require('./utils/options')
 const msgHandler = require('./handler/message')
+const welcome = require('./lib/welcome')
 
 const start = (client = new Client()) => {
     console.log('[DEV]', color('Slavyan', 'orange')) // Change your name and color here
@@ -13,6 +14,11 @@ const start = (client = new Client()) => {
         if (state === 'UNPAIRED') client.forceRefocus()
         if (state === 'CONFLICT') client.forceRefocus()
     })
+
+     client.onGlobalParicipantsChanged((async (heuh) => {
+            await welcome(client, heuh)
+            //left(client, heuh)
+            }))
 
      client.onAddedToGroup(((chat) => {
             let totalMem = chat.groupMetadata.participants.length
