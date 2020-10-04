@@ -2,7 +2,6 @@ const { decryptMedia, Client } = require('@open-wa/wa-automate')
 const moment = require('moment-timezone')
 const os = require('os')
 const axios = require('axios')
-const welkom = JSON.parse(fs.readFileSync('./lib/welcome.json'))
 const igm = require('instagram-fetcher')
 moment.tz.setDefault('Asia/Jakarta').locale('id')
 const { downloader, urlShortener, meme, fetish, lewd, waifu } = require('../../lib')
@@ -197,23 +196,6 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                     console.error(err)
                     client.reply(from, `⚠️ Terjadi kesalahan! [ERR]\n\n${err}`)
                 })
-            break
-            
-            case 'welcome':
-                if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-                if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
-                if (args.length === 1) return client.reply(from, 'Pilih enable atau disable!', id)
-                if (args[1].toLowerCase() === 'enable') {
-                welkom.push(chat.id)
-                fs.writeFileSync('./lib/welcome.json', JSON.stringify(welkom))
-                client.reply(from, 'Fitur welcome berhasil di aktifkan di group ini!', id)
-                } else if (args[1].toLowerCase() === 'disable') {
-                welkom.splice(chat.id, 1)
-                fs.writeFileSync('./lib/welcome.json', JSON.stringify(welkom))
-                client.reply(from, 'Fitur welcome berhasil di nonaktifkan di group ini!', id)
-                }    else {
-                client.reply(from, 'Pilih enable atau disable udin!', id)
-                }
             break
 
             // Sticker
