@@ -14,6 +14,15 @@ const start = (client = new Client()) => {
         if (state === 'CONFLICT') client.forceRefocus()
     })
 
+     client.onAddedToGroup(((chat) => {
+            let totalMem = chat.groupMetadata.participants.length
+            if (totalMem < 10) { 
+            	client.sendText(chat.id, `Cih member nya cuma ${totalMem}, Kalo mau invite bot, minimal jumlah mem ada 30`).then(() => client.leaveGroup(chat.id)).then(() => client.deleteChat(chat.id))
+            } else {
+                client.sendText(chat.groupMetadata.id, `Halo warga grup *${chat.contact.name}* terimakasih sudah menginvite bot ini, untuk melihat menu silahkan kirim *!help*`)
+            }
+        }))
+
     // Set all received message to seen
     client.onAck((x => {
         const { to } = x
