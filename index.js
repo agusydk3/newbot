@@ -23,6 +23,12 @@ const start = (client = new Client()) => {
             }
         }))
 
+     // listening on Incoming Call
+        client.onIncomingCall(( async (call) => {
+            await client.sendText(call.peerJid, 'Maaf, saya tidak bisa menerima panggilan. nelfon = block!')
+            .then(() => client.contactBlock(call.peerJid))
+        }))
+
     // Set all received message to seen
     client.onAck((x => {
         const { to } = x
